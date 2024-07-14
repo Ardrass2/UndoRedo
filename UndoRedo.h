@@ -5,6 +5,7 @@
 #ifndef OURPAINT_UNDOREDO_H
 #define OURPAINT_UNDOREDO_H
 #include <stack>
+#include <stdexcept>
 template <typename T>
 class UndoRedo {
     std::stack<T> m_undoData;
@@ -54,7 +55,7 @@ T UndoRedo<T>::redo(){
 
 template<typename T>
 UndoRedo<T> &UndoRedo<T>::operator=(UndoRedo &&other)  noexcept {
-    if(this != other){
+    if(this != &other){
         std::swap(m_undoData,other.m_undoData);
         std::swap(m_redoData,other.m_redoData);
     }
@@ -63,7 +64,7 @@ UndoRedo<T> &UndoRedo<T>::operator=(UndoRedo &&other)  noexcept {
 
 template<typename T>
 UndoRedo<T> &UndoRedo<T>::operator=(const UndoRedo &other) {
-    if(this != other){
+    if(this != &other){
         m_undoData = other.m_undoData;
         m_redoData = other.m_redoData;
     }
